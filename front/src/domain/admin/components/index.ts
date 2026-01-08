@@ -1,0 +1,9 @@
+export { default as AdminAccessGuard } from './AdminAccessGuard.vue';
+export { default as AdminStatusBadge } from './AdminStatusBadge.vue';
+export { default as AdminCategoriesPanel } from './AdminCategoriesPanel.vue';
+export { default as AdminInventoryPanel } from './AdminInventoryPanel.vue';
+export { default as AdminCategoryForm } from './AdminCategoryForm.vue';
+export { default as AdminCategoryList } from './AdminCategoryList.vue';
+export { default as AdminInventoryStatsCard } from './AdminInventoryStatsCard.vue';
+export { default as AdminInventoryMovementForm } from './AdminInventoryMovementForm.vue';
+export { default as AdminInventoryMovementsTable } from './AdminInventoryMovementsTable.vue';

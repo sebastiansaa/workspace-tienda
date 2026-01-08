@@ -1,0 +1,62 @@
+@import './base.css';
+
+/* Variables CSS basadas en SHARED_CONFIG */
+:root {
+  --max-width: 1280px; /* SHARED_CONFIG.layout.containerMaxWidth */
+  --section-bottom-spacing: 2rem; /* SHARED_CONFIG.layout.sectionBottomSpacing */
+
+  /* Breakpoints - SHARED_CONFIG.breakpoints */
+  --breakpoint-mobile: 767px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-tablet-max: 1023px;
+  --breakpoint-desktop: 1024px;
+
+  /* Paddings responsive */
+  --padding-mobile: 0.5rem;
+  --padding-tablet: 1rem;
+  --padding-desktop: 3rem;
+}
+
+/* Evitar scroll horizontal en toda la app */
+html,
+body {
+  overflow-x: hidden;
+}
+
+/* Contenedor principal de la app */
+#app {
+  max-width: var(--max-width); /* Usando SHARED_CONFIG.layout.containerMaxWidth */
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+/* Contenedor de contenido (dentro de #app) */
+#app-content {
+  width: 100%;
+  padding: 0 var(--padding-mobile); /* Mobile (≤767px según SHARED_CONFIG.breakpoints.mobile) */
+}
+
+/* Header siempre arriba */
+header {
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+/* Tablet: usando SHARED_CONFIG.breakpoints.tablet y tabletMax */
+@media (min-width: 768px) and (max-width: 1023px) {
+  #app-content {
+    padding: 0 var(--padding-tablet);
+  }
+}
+
+/* Desktop: usando SHARED_CONFIG.breakpoints.desktop */
+@media (min-width: 1024px) {
+  body {
+    background-color: #f6f3ee;
+  }
+
+  #app-content {
+    padding: 0 var(--padding-desktop);
+  }
+}

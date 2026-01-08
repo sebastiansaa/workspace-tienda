@@ -1,0 +1,44 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: tienda_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Seba123
+      POSTGRES_DB: eccomerce
+    ports:
+      - '5433:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    container_name: tienda_adminer
+    restart: always
+    ports:
+      - '8080:8080'
+
+  api:
+    build: .
+    container_name: tienda_api
+    restart: on-failure
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    environment:
+      # override the DATABASE_URL from .env to use the postgres service hostname
+      DATABASE_URL: 'postgres://postgres:Seba123@postgres:5432/eccomerce'
+      NODE_ENV: production
+      PORT: '3000'
+    ports:
+      - '3000:3000'
+    healthcheck:
+      test: ['CMD-SHELL', 'curl -f http://localhost:3000/api/health || exit 1']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
