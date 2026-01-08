@@ -1,5 +1,6 @@
 import { axiosAdapter } from "@/shared/api/axiosAdapter";
 import type { AuthResponseRaw, AuthResponse } from "../interfaces/AuthResponse";
+import type { AuthUserProfile } from "../interfaces/AuthProfile";
 import type { User } from "../interfaces/User";
 
 function mapTokens(raw: AuthResponseRaw["tokens"]) {
@@ -44,9 +45,9 @@ export async function register(email: string, password: string): Promise<AuthRes
 
 // Obtener el perfil del usuario autenticado
 export async function profile(): Promise<User | null> {
-  const response = await axiosAdapter.get<User | null>("/users/me");
+  const response = await axiosAdapter.get<AuthUserProfile | null>("/auth/me");
   if (!response.data) return null;
-  return mapUser(response.data);
+  return mapUser(response.data as AuthResponseRaw["user"]);
 }
 
 // Refrescar tokens

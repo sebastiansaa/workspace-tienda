@@ -9,5 +9,5 @@ export function resolveProductImages(images?: string[] | null): string[] {
 }
 
 export function getPrimaryProductImage(images?: string[] | null): string {
-    return resolveProductImages(images)[0]
+    return resolveProductImages(images)[0] || PRODUCT_IMAGE_PLACEHOLDER
 }

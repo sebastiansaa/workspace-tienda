@@ -37,6 +37,11 @@ Autenticación de usuarios con JWT, refresh automático de tokens y control de a
 - **No dispara eventos**: Operaciones síncronas
 - **No escucha eventos**: Autónomo
 
+## Identidad oficial
+
+- `/auth/me` es la fuente elemental de identidad (id, email, roles) y se obtiene siempre después de renovar tokens; el dominio Auth provee esta ruta, por lo que cualquier otro dato mínimo debe refrescarse ahí.
+- El dominio Account se usa solo para datos enriquecidos como direcciones, preferencias e historial, y conserva `/users/me` dentro de su propio contexto.
+
 ### Variables de Entorno
 
 - **No lee envs**: Tokens almacenados en localStorage

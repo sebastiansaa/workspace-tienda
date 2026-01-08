@@ -1,4 +1,4 @@
-import type { HttpClient } from '../../../shared/api/httpClient'
+import type { HttpClient } from '../../../shared/api/HttpClient'
 import { axiosAdapter } from '../../../shared/api/axiosAdapter'
 
 import type {

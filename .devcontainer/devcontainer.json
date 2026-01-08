@@ -1,0 +1,20 @@
+{
+  "name": "workspace-tienda",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:0-22",
+  "workspaceFolder": "/workspaces/workspace-tienda",
+  "remoteUser": "vscode",
+  "forwardPorts": [3000, 5173, 8080],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "eamodio.gitlens",
+        "orta.vscode-jest",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  },
+  "postCreateCommand": "cd /workspaces/workspace-tienda/back && npm install && cd /workspaces/workspace-tienda/front && npm install",
+  "postStartCommand": "./.devcontainer/start-dev-environment.sh"
+}

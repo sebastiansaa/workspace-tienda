@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import type { User } from '../interfaces/User'
-import { login as loginService, refreshToken as refreshService, register as registerService, logout as logoutService } from '../services/authService'
+import { login as loginService, refreshToken as refreshService, register as registerService, logout as logoutService, profile as profileService } from '../services/authService'
 import { getAccountProfile } from '@/domain/account/services'
 
 type Tokens = {
@@ -89,7 +89,11 @@ export const useAuthStore = defineStore('auth', {
       try {
         const auth = await refreshService(this.refreshToken)
         this.setTokens(auth.tokens)
-        this.user = auth.user ?? this.user
+        const identity = await profileService()
+        if (!identity) {
+          throw new Error('Unable to load auth identity')
+        }
+        this.user = identity ?? auth.user ?? this.user
         try {
           const profile = await getAccountProfile()
           this.user = {

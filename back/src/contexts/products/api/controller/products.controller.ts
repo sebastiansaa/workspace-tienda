@@ -1,9 +1,9 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Query, UploadedFile, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UploadedFile, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-import { SearchProductsRequestDto, ListProductsRequestDto, SaveProductRequestDto } from '../dtos/request';
+import { UpdateStockRequestDto, SearchProductsRequestDto, ListProductsRequestDto, SaveProductRequestDto } from '../dtos/request';
 import { ListResponseProductDto, ResponseProductDto } from '../dtos/response';
 import { ProductApiMapper } from '../mappers/product-api.mapper';
 import {
@@ -14,6 +14,7 @@ import {
   DeleteProductUsecase,
   RestoreProductUsecase,
   FindLowStockUsecase,
+  UpdateStockUsecase,
 } from '../../app/usecases';
 import { ResponseMessage } from '../../../shared/decorators/response-message.decorator';
 import { JwtAuthGuard } from '../../../auth/infra/guards/jwt-auth.guard';
@@ -36,6 +37,7 @@ export class ProductsController {
     private readonly deleteProductUsecase: DeleteProductUsecase,
     private readonly restoreProductUsecase: RestoreProductUsecase,
     private readonly findLowStockUsecase: FindLowStockUsecase,
+    private readonly updateStockUsecase: UpdateStockUsecase,
   ) { }
 
   /**
@@ -114,6 +116,23 @@ export class ProductsController {
     const query = ProductApiMapper.toFindLowStockQuery(threshold);
     const products = await this.findLowStockUsecase.execute(query);
     return ProductApiMapper.toResponseDtoList(products);
+  }
+
+  @Put(':id/stock')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
+  @ApiBearerAuth()
+  @ResponseMessage('Product stock updated successfully')
+  @ApiOperation({ summary: 'Actualizar stock del producto (admin)' })
+  @ApiResponse({ status: 200, description: 'Stock actualizado', type: ResponseProductDto })
+  @ApiResponse({ status: 400, description: 'Cantidad inválida' })
+  async updateStock(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: UpdateStockRequestDto,
+  ): Promise<ResponseProductDto> {
+    const command = ProductApiMapper.toUpdateStockCommand(id, dto.quantity);
+    const product = await this.updateStockUsecase.execute(command);
+    return ProductApiMapper.toResponseDto(product);
   }
 
   @Delete(':id')

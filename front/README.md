@@ -14,6 +14,13 @@ Este proyecto es una tienda online construida con Vue 3, Pinia, Vite y TanStack 
 - Arquitectura limpia, modular y DRY
 - Uso de Vue 3, Pinia, Vue Router, TanStack Query, Axios, Vee-Validate, Zod, Toastification y Heroicons
 
+## Arquitectura
+- **api/**: Cliente HTTP para backend .
+- **app/**: Lógica de negocio  y hooks .
+- **stores/**: Estado global con Pinia.
+- **types/**: Esquemas y tipos 
+- **ui/**: Componentes y vistas Vue .
+
 ## Requisitos
 
 - Node.js ^20.19.0 o >=22.12.0
