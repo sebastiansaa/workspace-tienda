@@ -1,6 +1,0 @@
-[submodule "backend"]
-	path = backend
-	url = https://github.com/sebastiansaa/Tienda_lite_backend.git
-[submodule "frontend"]
-	path = frontend
-	url = https://github.com/sebastiansaa/-vue-ts-auth-pinia-usequery-Ecommerce.git
